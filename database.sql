@@ -3,9 +3,9 @@
 -- IBL12307: Web Development Laboratory Practical Final Project
 -- =====================================================================
 
--- Create Database
-CREATE DATABASE IF NOT EXISTS `pharmacy_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `pharmacy_db`;
+-- Create Database (Commented out for cloud/shared hosting compatibility where the DB is pre-selected)
+-- CREATE DATABASE IF NOT EXISTS `pharmacy_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- USE `pharmacy_db`;
 
 -- Disable foreign key checks temporarily to avoid drop conflicts
 SET FOREIGN_KEY_CHECKS = 0;
