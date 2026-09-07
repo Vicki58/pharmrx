@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PharmRx - Final Project Report (IBL12307)</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 2rem;
+            background: #fff;
+        }
+        .doc-title {
+            color: #0f172a;
+            font-size: 28px;
+            border-bottom: 3px solid #06b6d4;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .chapter-title {
+            color: #1e3a8a;
+            font-size: 22px;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 6px;
+            margin-top: 35px;
+            page-break-before: auto;
+        }
+        h3 {
+            color: #0369a1;
+            margin-top: 20px;
+        }
+        p, li {
+            font-size: 14px;
+            color: #334155;
+        }
+        pre {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            border: 1px solid #334155;
+        }
+        code {
+            background: #f1f5f9;
+            color: #0284c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            font-size: 13px;
+        }
+        .report-table th, .report-table td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .report-table th {
+            background: #f8fafc;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .report-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #e2e8f0;
+            margin: 25px 0;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0284c7;
+            color: white;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .print-btn:hover {
+            background: #0369a1;
+        }
+        @media print {
+            .print-btn { display: none; }
+            body { padding: 0; max-width: 100%; }
+            .chapter-title { page-break-before: always; }
+            .doc-title { page-break-before: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+    <h1 class='doc-title'>Pharmacy Management System (PharmRx) - Comprehensive Project Report</h1>
+<p><strong>Course:</strong> IBL12307: Web Development Laboratory Practical  </p>
+<p><strong>Deliverable:</strong> Final Project Report (Complete Documentation)  </p>
+<p><strong>Instructor:</strong> Dr. Edwin Ngwawe (<code>edwin.ngwawe@tukenya.ac.ke</code>)  </p>
+<p><strong>Institution:</strong> Technical University of Kenya (TUK)  </p>
+<hr/>
+<h2 class='chapter-title'>Chapter 1: Introduction</h2>
+<h3>1.1 Problem Statement</h3>
+<p>In traditional pharmaceutical operations, manual tracking of medicine inventories, category classification, pricing updates, and daily transactions is prone to severe human errors, stock discrepancy, and security vulnerabilities. Key issues in manual or spreadsheet-based record-keeping include:</p>
+<ol><li><strong>Overselling & Inaccurate Stock Counts:</strong> Cashiers and dispensers frequently sell items without real-time inventory visibility, leading to unfulfilled prescriptions.</li></ol>
+<ol><li><strong>Lack of Auditability & Insider Fraud:</strong> Without automated logging, administrators cannot trace who added a product, altered a drug's retail price, or deleted critical records.</li></ol>
+<ol><li><strong>Absence of Role Separation:</strong> Without authenticated permission tiers, all users operate with unrestricted system access.</li></ol>
+<p>The <strong>PharmRx Pharmacy Management System</strong> solves these challenges by providing a secure, role-based, database-backed web portal for real-time inventory tracking in Kenyan Shillings (KES), automated point-of-sale checkout, and tamper-resistant audit logging.</p>
+<h3>1.2 Objectives</h3>
+<p>The primary objective of this project is to develop a robust, secure, and user-friendly PHP-MySQL web application that demonstrates full-stack web development competencies:</p>
+<ul><li><strong>Inventory Automation:</strong> Implement a responsive medicine catalog supporting image uploads, categorization, and dynamic stock decrementation upon sale.</li></ul>
+<ul><li><strong>Role-Based Access Control (RBAC):</strong> Enforce strict privilege separation between <strong>Administrators</strong> (full CRUD and audit privileges) and <strong>Normal Staff</strong> (view-only catalog and point-of-sale transaction recording).</li></ul>
+<ul><li><strong>Enterprise Web Security:</strong> Protect application workflows against SQL Injection (via PDO prepared statements), Cross-Site Scripting (XSS), and Session Fixation attacks.</li></ul>
+<ul><li><strong>Accountability & Compliance:</strong> Maintain an immutable database activity log recording all user logins, logouts, additions, modifications, and deletions with timestamps.</li></ul>
+<h3>1.3 Scope</h3>
+<p>The application encompasses the following functional modules:</p>
+<ul><li><strong>Authentication & Security:</strong> User registration, session-hardened login, logout, and password modification.</li></ul>
+<ul><li><strong>Inventory Management:</strong> Full CRUD operations for medicines and categories with price tracking in KES.</li></ul>
+<ul><li><strong>File Upload Subsystem:</strong> Validation and storage of medicine packaging images (supporting JPG, PNG, WEBP with 2MB limits).</li></ul>
+<ul><li><strong>Search & Pagination:</strong> Fast keyword search and paginated views across large inventory and audit datasets.</li></ul>
+<ul><li><strong>Sales POS Subsystem:</strong> Real-time price calculator, atomic transaction processing, and stock updates.</li></ul>
+<ul><li><strong>Activity Audit Trail:</strong> Visual console displaying system-wide user actions.</li></ul>
+<hr/>
+<h2 class='chapter-title'>Chapter 2: System Analysis</h2>
+<h3>2.1 Functional Requirements</h3>
+<ol><li><strong>User Authentication (10 Marks):</strong></li></ol>
+<p>   - System registration with uniqueness validation on usernames and emails.</p>
+<p>   - Secure login with Bcrypt password verification.</p>
+<p>   - Session termination upon logout and password update capabilities.</p>
+<ol><li><strong>User Roles & Authorization (10 Marks):</strong></li></ol>
+<p>   - <strong>Administrator:</strong> Full privileges to Create, Read, Update, and Delete medicines and categories, inspect audit logs, and cancel sales.</p>
+<p>   - <strong>Normal User (Staff):</strong> Restricted to catalog viewing and registering sales transactions.</p>
+<p>   - Route-level middleware (<code>requireAdmin()</code>) blocking unauthorized page requests with HTTP 403 Forbidden.</p>
+<ol><li><strong>Database Relational Design (10 Marks):</strong></li></ol>
+<p>   - Minimum four related tables (PharmRx implements 5 tables) normalized to 3NF with primary and foreign keys.</p>
+<ol><li><strong>CRUD Operations (10 Marks):</strong></li></ol>
+<p>   - Add new medicines, view inventory cards, edit medicine properties/images, and delete records safely.</p>
+<ol><li><strong>Search & Pagination (5 Marks):</strong></li></ol>
+<p>   - Query filters by name/description and segmented multi-page navigation.</p>
+<p>6. <strong>File Upload & Validation (5 Marks):</strong></p>
+<p>   - Upload packaging photos with file extension, MIME type, and size restrictions.</p>
+<p>7. <strong>Validation & Security (5 Marks):</strong></p>
+<p>   - Dual-tier validation: JavaScript client feedback and PHP server-side enforcement.</p>
+<p>   - 100% prepared statements (PDO), XSS escaping, and session protection.</p>
+<p>8. <strong>Activity Logging (5 Marks):</strong></p>
+<p>   - Automatic logging of <code>Login</code>, <code>Logout</code>, <code>Add</code>, <code>Edit</code>, and <code>Delete</code> actions with User, Description, Date, and Time.</p>
+<p>9. <strong>User Interface (5 Marks):</strong></p>
+<p>   - Custom dark-mode glassmorphic theme with responsive grid navigation and meaningful alert messages.</p>
+<p>10. <strong>Testing & Demonstration (30 Marks):</strong></p>
+<p>    - Automated unit verification test suite and 10-minute live demonstration.</p>
+<h3>2.2 Non-Functional Requirements</h3>
+<ul><li><strong>Performance:</strong> Database index lookups and low-latency PDO prepared queries ensuring sub-second response times.</li></ul>
+<ul><li><strong>Usability:</strong> High-contrast responsive design optimized for desktop and mobile browsers using Vanilla CSS and Google Outfit typography.</li></ul>
+<ul><li><strong>Data Integrity:</strong> ACID-compliant MySQL InnoDB transactions preventing partial writes or negative inventory levels.</li></ul>
+<ul><li><strong>Maintainability:</strong> Modular separation of concerns into configuration, layout templates, and functional page controllers.</li></ul>
+<hr/>
+<h2 class='chapter-title'>Chapter 3: System Design</h2>
+<h3>3.1 Entity-Relationship (ER) Diagram</h3>
+<pre><code>+------------------+          1:N          +--------------------+
+|    CATEGORIES    |----------------------&lt;|     MEDICINES      |
++------------------+                       +--------------------+
+| id (PK)          |                       | id (PK)            |
+| name (Unique)    |                       | category_id (FK)   |
+| description      |                       | name (Unique)      |
+| created_at       |                       | description        |
++------------------+                       | price (KES)        |
+                                           | stock_quantity     |
+                                           | image_path         |
+                                           | created_at         |
+                                           +--------------------+
+                                                     | 1:N
+                                                     |
+                                                     v
++------------------+          1:N          +--------------------+
+|      USERS       |----------------------&lt;|       SALES        |
++------------------+                       +--------------------+
+| id (PK)          |                       | id (PK)            |
+| username (Unique)|                       | medicine_id (FK)   |
+| email (Unique)   |                       | user_id (FK)       |
+| password_hash    |                       | quantity           |
+| role (ENUM)      |                       | total_price (KES)  |
+| created_at       |                       | sale_date          |
++------------------+                       +--------------------+
+        | 1:N
+        |
+        v
++--------------------+
+|   ACTIVITY_LOGS    |
++--------------------+
+| id (PK)            |
+| user_id (FK)       |
+| activity (ENUM)    |
+| description        |
+| log_time           |
++--------------------+</code></pre>
+<h3>3.2 Database Tables Specification (3NF Normalization)</h3>
+<ol><li><strong>`users` Table:</strong></li></ol>
+<p>   * <code>id</code>: INT, Auto Increment, Primary Key</p>
+<p>   * <code>username</code>: VARCHAR(50), NOT NULL, UNIQUE</p>
+<p>   * <code>email</code>: VARCHAR(100), NOT NULL, UNIQUE</p>
+<p>   * <code>password_hash</code>: VARCHAR(255), NOT NULL (Bcrypt)</p>
+<p>   * <code>role</code>: ENUM('Admin', 'Normal'), NOT NULL, DEFAULT 'Normal'</p>
+<p>   * <code>created_at</code>: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP</p>
+<ol><li><strong>`categories` Table:</strong></li></ol>
+<p>   * <code>id</code>: INT, Auto Increment, Primary Key</p>
+<p>   * <code>name</code>: VARCHAR(100), NOT NULL, UNIQUE</p>
+<p>   * <code>description</code>: TEXT, NULL</p>
+<p>   * <code>created_at</code>: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP</p>
+<ol><li><strong>`medicines` Table:</strong></li></ol>
+<p>   * <code>id</code>: INT, Auto Increment, Primary Key</p>
+<p>   * <code>category_id</code>: INT, NULL, Foreign Key references <code>categories(id)</code> ON DELETE SET NULL</p>
+<p>   * <code>name</code>: VARCHAR(150), NOT NULL, UNIQUE</p>
+<p>   * <code>description</code>: TEXT, NULL</p>
+<p>   * <code>price</code>: DECIMAL(10,2), NOT NULL</p>
+<p>   * <code>stock_quantity</code>: INT, NOT NULL, DEFAULT 0</p>
+<p>   * <code>image_path</code>: VARCHAR(255), NULL</p>
+<p>   * <code>created_at</code>: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP</p>
+<ol><li><strong>`sales` Table:</strong></li></ol>
+<p>   * <code>id</code>: INT, Auto Increment, Primary Key</p>
+<p>   * <code>medicine_id</code>: INT, NULL, Foreign Key references <code>medicines(id)</code> ON DELETE SET NULL</p>
+<p>   * <code>user_id</code>: INT, NULL, Foreign Key references <code>users(id)</code> ON DELETE SET NULL</p>
+<p>   * <code>quantity</code>: INT, NOT NULL</p>
+<p>   * <code>total_price</code>: DECIMAL(10,2), NOT NULL</p>
+<p>   * <code>sale_date</code>: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP</p>
+<ol><li><strong>`activity_logs` Table:</strong></li></ol>
+<p>   * <code>id</code>: INT, Auto Increment, Primary Key</p>
+<p>   * <code>user_id</code>: INT, NULL, Foreign Key references <code>users(id)</code> ON DELETE SET NULL</p>
+<p>   * <code>activity</code>: ENUM('Login', 'Logout', 'Add', 'Edit', 'Delete'), NOT NULL</p>
+<p>   * <code>description</code>: TEXT, NOT NULL</p>
+<p>   * <code>log_time</code>: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP</p>
+<h3>3.3 Use Case Diagram</h3>
+<pre><code>                  +---------------------------------------------------+
+                  |                 PharmRx System                    |
+                  +---------------------------------------------------+
+                  |                                                   |
+ ( Pharmacist / ) |  --&gt; [ Login / Logout / Change Password ]         |
+ ( Normal User  ) |  --&gt; [ View Medicine Catalog &amp; Search ]           |
+                  |  --&gt; [ Record Sale Transaction (POS) ]            |
+                  |                                                   |
+                  |                                                   |
+ ( Administrator) |  --&gt; [ All Normal User Use Cases ]                |
+                  |  --&gt; [ Add, Edit, Delete Medicines (CRUD) ]       |
+                  |  --&gt; [ Upload / Replace Packaging Photos ]        |
+                  |  --&gt; [ Add, Edit, Delete Categories ]             |
+                  |  --&gt; [ Cancel Sale &amp; Restore Stock ]              |
+                  |  --&gt; [ Inspect &amp; Filter System Activity Logs ]    |
+                  |  --&gt; [ View Real-time Dashboard Analytics ]       |
+                  +---------------------------------------------------+</code></pre>
+<h3>3.4 System Flowchart</h3>
+<pre><code>[Start Request]
+       |
+       v
+[Is User Logged In?] ---- No ----&gt; [Redirect to login.php]
+       |
+      Yes
+       |
+       v
+[Is Route Restricted to Admin?]
+       |
+      +- Yes -&gt; [Does Session Role == 'Admin'?]
+       |                      |
+       |                     No -&gt; [Return HTTP 403 Forbidden &amp; Stop]
+       |                      |
+       |                     Yes
+       v                      |
+[Execute Requested Controller (Add/Edit/Delete/Sell)] &lt;----+
+       |
+       v
+[Validate Client Inputs (JS) &amp; Server Constraints (PHP)]
+       |
+[Is Input Valid?] ---- No ----&gt; [Display Error Feedback Alert]
+       |
+      Yes
+       |
+       v
+[Execute PDO Prepared Statement within Database]
+       |
+       v
+[Write Audit Entry to `activity_logs` Table]
+       |
+       v
+[Render Success View / Redirect to Catalog]
+       |
+       v
+[End]</code></pre>
+<hr/>
+<h2 class='chapter-title'>Chapter 4: Implementation</h2>
+<h3>4.1 Technologies Used</h3>
+<ul><li><strong>Backend Environment:</strong> PHP 8.3 (Object-oriented PDO database abstraction).</li></ul>
+<ul><li><strong>Database Engine:</strong> MySQL 8.0 / MariaDB (InnoDB storage engine supporting Foreign Key constraints and ACID transactions).</li></ul>
+<ul><li><strong>Frontend Architecture:</strong> Semantic HTML5, Vanilla JavaScript (ES6), and Custom CSS Variables.</li></ul>
+<ul><li><strong>Development Server:</strong> Apache / Laragon / XAMPP on Windows.</li></ul>
+<h3>4.2 Major Modules</h3>
+<ul><li><strong>`config/db.php`:</strong> Centralized PDO connection enforcing `ATTR_EMULATE_PREPARES => false` and `ERRMODE_EXCEPTION`.</li></ul>
+<ul><li><strong>`config/auth.php`:</strong> Security layer handling `session_regenerate_id()`, `isLoggedIn()`, and `requireAdmin()`.</li></ul>
+<ul><li><strong>`config/logger.php`:</strong> Universal `logActivity()` helper recording forensic records for all state-changing operations.</li></ul>
+<ul><li><strong>`medicines.php`:</strong> Dynamic grid view with SQL pagination (`LIMIT`, `OFFSET`) and parameterized keyword search.</li></ul>
+<ul><li><strong>`medicine_add.php` & `medicine_edit.php`:</strong> Form controllers featuring collision-proof image uploads and file unlink cleanup.</li></ul>
+<ul><li><strong>`sales.php`:</strong> Point-of-sale checkout system using row-locking transactions (`SELECT ... FOR UPDATE`) to prevent negative inventory.</li></ul>
+<ul><li><strong>`logs.php`:</strong> Forensic auditing console with activity type filtering.</li></ul>
+<ul><li><strong>`index.php`:</strong> Executive dashboard summarizing total inventory value, low-stock warnings, and recent transactions.</li></ul>
+<hr/>
+<h2 class='chapter-title'>Chapter 5: Testing</h2>
+<h3>5.1 Test Plan & Execution Matrix</h3>
+<table class='report-table'><thead><tr><th>Test ID</th><th>Test Scenario</th><th>Input Data</th><th>Expected Result</th><th>Actual Result</th><th>Status</th></tr></thead><tbody><tr><td><strong>TC-01</strong></td><td>User Authentication</td><td>Valid username & password</td><td>Session initialized, redirected to Dashboard</td><td>Logged in, session token created</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-02</strong></td><td>Password Hashing</td><td>Plaintext password</td><td>Secure Bcrypt hash generated in DB</td><td>Verified via `password_verify()`</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-03</strong></td><td>Role Access Guard</td><td>Normal staff accessing `medicine_add.php`</td><td>HTTP 403 Forbidden Access Denied screen</td><td>Unauthorized screen shown</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-04</strong></td><td>SQL Injection Defense</td><td>Input `' OR 1=1 --` in login / search</td><td>Treated strictly as literal string</td><td>Zero SQL injection vulnerability</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-05</strong></td><td>Negative Value Validation</td><td>Price: `-50.00`, Stock: `-10`</td><td>Form rejected by JS & PHP validation</td><td>Error alert shown, insert blocked</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-06</strong></td><td>File Upload Constraints</td><td>Uploading `.exe` or `>2MB` file</td><td>Rejected with friendly error message</td><td>File rejected, no upload</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-07</strong></td><td>Inventory Stock Deduction</td><td>Selling 3 units of Paracetamol</td><td>Quantity decremented, sale logged</td><td>Stock decreased by 3 in DB</td><td><strong>PASS</strong></td></tr><tr><td><strong>TC-08</strong></td><td>Activity Audit Logging</td><td>Add medicine / Delete medicine</td><td>Record written to `activity_logs`</td><td>Log displayed in `logs.php`</td><td><strong>PASS</strong></td></tr></tbody></table>
+<h3>5.2 Automated Unit Test Execution (`test_runner.php`)</h3>
+<pre><code>==========================================================
+   PHARMRX SYSTEM AUTOMATED VERIFICATION TEST RUNNER      
+==========================================================
+
+Testing: Database PDO Connection...........................[ PASS ]
+Testing: Verify Required Table Entities Count (Min 4)......[ PASS ]
+Testing: Password Hashing Integration (Secure Hash)........[ PASS ]
+Testing: User Role Check Helpers...........................[ PASS ]
+Testing: Database Structural Normalization (Foreign Keys)..[ PASS ]
+Testing: System Activity Logger writes to DB...............[ PASS ]
+Testing: Stock &amp; Price constraints logic...................[ PASS ]
+
+==========================================================
+TEST RESULTS SUMMARY: 
+   Passed: 7
+   Failed: 0
+==========================================================</code></pre>
+<hr/>
+<h2 class='chapter-title'>Chapter 6: Conclusion</h2>
+<h3>6.1 Challenges Encountered & Technical Solutions</h3>
+<ol><li><strong>Concurrent Transactions during Checkout:</strong>  </li></ol>
+<p>   *Problem:* Simultaneous purchases could cause race conditions, resulting in inventory going below zero.  </p>
+<p>   *Solution:* Implemented MySQL InnoDB transactions (<code>beginTransaction()</code>) with <code>SELECT ... FOR UPDATE</code> row locks, ensuring atomicity and consistency.</p>
+<ol><li><strong>Orphaned Media Files:</strong>  </li></ol>
+<p>   *Problem:* Modifying drug packaging photos or deleting products left dead image files consuming disk storage.  </p>
+<p>   *Solution:* Integrated PHP's <code>unlink()</code> function in <code>medicine_edit.php</code> and <code>medicine_delete.php</code> to permanently delete superseded image files.</p>
+<ol><li><strong>Dual-Tier Form Validation:</strong>  </li></ol>
+<p>   *Problem:* Client-side JavaScript can be bypassed by disabling scripts, but server-only validation causes slow page reloads.  </p>
+<p>   *Solution:* Synchronized JavaScript for immediate visual user feedback with strict server-side PHP sanitization.</p>
+<h3>6.2 Lessons Learned & Recommendations</h3>
+<ul><li>Prioritizing database normalization (3NF) and constraint design prior to coding eliminates backend bugs and data anomalies.</li></ul>
+<ul><li>Security controls (prepared statements, password hashing, session regeneration) must be integral architectural decisions rather than last-minute additions.</li></ul>
+<h3>6.3 Future Improvements</h3>
+<ul><li>Barcode and QR code scanner integration for high-speed point-of-sale scanning.</li></ul>
+<ul><li>Automated SMS and email gateway integration to alert pharmaceutical suppliers when stock falls below reorder thresholds.</li></ul>
+<ul><li>Customer prescription upload portal and automated PDF receipt generation.</li></ul>
+</body>
+</html>
